@@ -29,6 +29,28 @@ function newDecode(param) {
 }
 ```
 
+**Promise包装器**
+
+```js
+function toPromise(fn, ...params) {
+  return new Promise((resolve, reject) => {
+    let next = (mark) => {
+      if (mark === false || mark instanceof Error) {
+        reject(mark);
+      } else {
+        resolve(true);
+      }
+    };
+    if (fn) {
+      fn(next, ...params);
+    }
+    else {
+      next()
+    }
+  });
+}
+```
+
 **获取 url 查询参数**
 
 ```ts
@@ -37,6 +59,14 @@ function getSearchParams(key: string): string {
     const searchParams = new URLSearchParams(searchString);
     return searchParams.get(key) || ""
 }
+```
+
+**判断是否原生支持的方法**
+
+```js
+function isNative (Ctor) {
+    return typeof Ctor === "function" && /native code/.test(Ctor.toString());
+},
 ```
 
 **判断是否微信环境**
