@@ -79,3 +79,14 @@ FFC/GFC 会使 margin: auto 在垂直方向上居中元素；flex/grid 格式化
     margin: auto;
 }
 ```
+
+### 行内元素伪元素断行
+
+```css
+.primary::after {
+    content: '\A';
+    white-space: pre;
+}
+```
+
+- [Add a line break between inline elements](https://getfrontend.tips/add-a-line-break-between-inline-elements/)
