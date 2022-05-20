@@ -52,7 +52,7 @@ html {
 
 ### 水平垂直居中
 
-FFC/GFC 会使 margin: auto 在垂直方向上居中元素；flex/grid 格式化上下文中，设置了 margin: auto 的元素，在通过 justify-content 和 align-self 进行对齐之前，任何正处于空闲的空间都会分配到该方向的自动 margin 中去；而 margin auto 会自动分配水平和垂直方向上的剩余空间；
+`FFC/GFC` 会使 `margin: auto` 在垂直方向上居中元素；`flex/grid` 格式化上下文中，设置了 `margin: auto` 的元素，在通过 `justify-content` 和 `align-self` 进行对齐之前，任何正处于空闲的空间都会分配到该方向的自动 `margin` 中去；而 `margin auto` 会自动分配水平和垂直方向上的剩余空间；
 
 ```html
 <div class="g-container">
@@ -90,3 +90,54 @@ FFC/GFC 会使 margin: auto 在垂直方向上居中元素；flex/grid 格式化
 ```
 
 - [Add a line break between inline elements](https://getfrontend.tips/add-a-line-break-between-inline-elements/)
+
+### flex 内容弹性布局 footer 置底
+
+通过设置 `flex-grow: 1` 让 `main` 内容弹性伸缩，使得 `footer` 始终在页面底部；
+
+```html
+<body>
+    <div class="container">
+        <header>...</header>
+        <main>...</main>
+        <footer>...</footer>
+    </div>
+</body>
+```
+
+```css
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header,
+footer {
+    flex-shrink: 0;
+}
+
+main {
+    flex-grow: 1;
+}
+```
+
+- [Always put the footer at the bottom](https://getfrontend.tips/always-put-the-footer-at-the-bottom/)
+
+### 通过 :is 伪类选择器组合样式
+
+`:is` 伪类选择器为其参数中列出的选择器匹配到的所有元素应用样式：
+
+```css
+header a:hover,
+nav a:hover,
+footer a:hover {
+    text-decoration: underline;
+}
+
+:is(header, nav, footer) a:hover {
+    text-decoration: underline;
+}
+```
+
+- [原文 Combine styles with the :is pseudo-class selector](https://getfrontend.tips/combine-styles-with-the-is-pseudo-class-selector/)

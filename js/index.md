@@ -189,3 +189,33 @@ const isAppleDevice = () => /Mac|iPod|iPhone|iPad/.test(navigator.platform);
 ```
 
 - [20 JavaScript One-Liners That Will Help You Code Like a Pro](https://dev.to/ovi/20-javascript-one-liners-that-will-help-you-code-like-a-pro-4ddc)
+
+### canvas 下载为图片
+
+```js
+function screenShot(canvas) {
+    let shot = canvas.toDataURL("image/png");
+    downloadFile(new Date().getTime().toString(), shot);
+}
+
+function base64ToBlob(code) {
+    let parts = code.split(";base64,");
+    let type = parts[0].split(":")[1];
+    let raw = window.atob(parts[1]);
+    let rawLength = raw.length;
+    let uInt8Array = new Uint8Array(rawLength);
+    for (let i = 0; i < rawLength; ++i) {
+        uInt8Array[i] = raw.charCodeAt(i);
+    }
+    return new Blob([uInt8Array], { type });
+}
+
+function downloadFile(fileName, content) {
+    let link = document.createElement("a");
+    let blob = base64ToBlob(content);
+    link.dispatchEvent(new MouseEvent("click"))
+    link.download = fileName;
+    link.href = URL.createObjectURL(blob);
+    link.click();
+}
+```
