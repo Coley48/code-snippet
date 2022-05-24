@@ -128,6 +128,13 @@ function uniqueArr(arr) {
 }
 ```
 
+巧妙使用数组 reduce 方法和逗号表达式，可以得到更简洁的代码实现；
+
+```js
+let obj = arr.reduce((last, item) => (last[item] = item, last), {})
+Object.keys(set);
+```
+
 ### 交换变量值
 
 在不使用额外变量的情况下，可以使用解构赋值语法、异或运算实现，数字还可使用加减运算交换；
