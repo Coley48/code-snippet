@@ -226,3 +226,19 @@ function downloadFile(fileName, content) {
     link.click();
 }
 ```
+
+### 强制给定必须的参数
+
+在 ES6 中，默认参数值在参数缺省时被计算。这让我们可以强制给定某个必须的参数：
+
+```js
+const required = () => {
+    throw new Error('Missing parameter');
+};
+
+const getAges = (yearOfBirth = required()) => new Date().getFullYear() - yearOfBirth;
+```
+
+不带参数调用 `getAges()` 函数会抛出 `Missing parameter` 异常。
+
+- [原文 Enforce required parameters](https://getfrontend.tips/enforce-required-parameters/)

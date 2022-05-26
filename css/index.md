@@ -89,7 +89,7 @@ html {
 }
 ```
 
-- [Add a line break between inline elements](https://getfrontend.tips/add-a-line-break-between-inline-elements/)
+- [原文 Add a line break between inline elements](https://getfrontend.tips/add-a-line-break-between-inline-elements/)
 
 ### flex 内容弹性布局 footer 置底
 
@@ -122,7 +122,7 @@ main {
 }
 ```
 
-- [Always put the footer at the bottom](https://getfrontend.tips/always-put-the-footer-at-the-bottom/)
+- [原文 Always put the footer at the bottom](https://getfrontend.tips/always-put-the-footer-at-the-bottom/)
 
 ### 通过 :is 伪类选择器组合样式
 
