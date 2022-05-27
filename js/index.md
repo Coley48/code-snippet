@@ -242,3 +242,54 @@ const getAges = (yearOfBirth = required()) => new Date().getFullYear() - yearOfB
 不带参数调用 `getAges()` 函数会抛出 `Missing parameter` 异常。
 
 - [原文 Enforce required parameters](https://getfrontend.tips/enforce-required-parameters/)
+
+### 格式化列表
+
+我们可以利用 `Intl.ListFormat` 对象去用给定的区域格式化一个列表：
+
+```js
+const people = ['Foo', 'Bar', 'Fuzz'];
+
+new Intl.ListFormat('en', { type: 'conjunction' }).format(people);
+// 'Foo, Bar, and Fuzz'
+
+new Intl.ListFormat('en-GB', { type: 'disjunction' }).format(people);
+// 'Foo, Bar, or Fuzz'
+```
+
+- [原文 Format a list](https://getfrontend.tips/format-a-list/)
+
+### 将一个数字格式化为货币字符串
+
+给定一个数字，我们能将它格式化为一个货币字符串而不使用其他外部库。`NumberFormat` API 提供了一种简单的方式去格式化一个指定国家的货币：
+
+```js
+const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD', // 人民币：CNY
+    minimumFractionDigits: 2,
+});
+```
+
+可选的 `minimumFractionDigits` 参数指示最小位数在小数部分。调用 `format` 方法将格式化输入，然后会根据国家为货币添加前缀或后缀。
+
+```js
+formatter.format(2345); // '$2,345.00'
+formatter.format('2345'); // '$2,345.00'
+formatter.format('10000000'); // '$10,000,000.00'
+```
+
+- [原文 Format a number as a currency string](https://getfrontend.tips/format-a-number-as-a-currency-string/)
+- [MDN Intl.NumberFormat](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)
+
+### 获取当前时间戳
+
+```js
+new Date().getTime();
+Date.now();
+
+// These method are the same
+// The unary operator (`+`) calls the `valueOf` method automatically
++new Date();
+new Date().valueOf();
+```

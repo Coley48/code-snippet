@@ -141,3 +141,16 @@ footer a:hover {
 ```
 
 - [原文 Combine styles with the :is pseudo-class selector](https://getfrontend.tips/combine-styles-with-the-is-pseudo-class-selector/)
+
+### 在 CSS 属性选择器中忽略大小写敏感
+
+
+可以在选择器的 `]` 前面添加 `i`，使 CSS 属性选择器忽略大小写敏感；
+
+```css
+a[href$='.png' i]:after {
+    content: url(/img/png.svg);
+}
+```
+
+- [原文 Ignore case sensitivity in a CSS attribute selector](https://getfrontend.tips/ignore-case-sensitivity-in-a-css-attribute-selector/)
