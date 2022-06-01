@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            background-color: lightgray;
+            user-select: none;
+        }
+
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header,
+        .footer {
+            height: 150px;
+            flex-shrink: 0;
+        }
+
+        .main {
+            flex-grow: 1;
+            /* height: 300px; */
+            width: 80%;
+            background-color: lightblue;
+            display: flex;
+            justify-content: space-between;
+            /* flex-wrap: wrap; */
+            /* align-content: space-between; */
+            /* align-items: stretch; */
+            /* flex-direction: row-reverse; */
+            /* flex-wrap: wrap-reverse; */
+            /* flex-flow: column-reverse wrap-reverse; */
+        }
+
+        .main .item {
+            height: 40px;
+            width: 120px;
+            background-color: lightgoldenrodyellow;
+            cursor: pointer;
+            transition: all .3s linear;
+        }
+
+        .main .item.active {
+            /* order: -1; */
+            /* flex: 0 0 80px; */
+            flex: auto;
+            flex: none;
+            flex: 0 1 auto;
+            /* flex-shrink: 0; */
+            background-color: lightcoral;
+            align-self: flex-end;
+        }
+
+        :is(div, header, main):hover{
+            outline: 1px solid lightcoral;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">header</header>
+        <main class="main" id="main">
+            <div class="item">Hello, world. 1</div>
+            <div class="item">Hello, world. 2</div>
+            <div class="item active">Hello, world. 3</div>
+            <div class="item">Hello, world. 4</div>
+            <div class="item">Hello, world. 5</div>
+            <div class="item">Hello, world. 6</div>
+            <div class="item">Hello, world. 7</div>
+            <div class="item">Hello, world. 8</div>
+            <div class="item">Hello, world. 9</div>
+            <div class="item">Hello, world. 10</div>
+        </main>
+        <footer class="footer">footer</footer>
+    </div>
+
+    <script>
+    </script>
+</body>
+
+</html>

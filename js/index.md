@@ -293,3 +293,22 @@ Date.now();
 +new Date();
 new Date().valueOf();
 ```
+
+### 获取数组中最大的数
+
+```js
+// ... 在不同浏览器中对数组大小有不同限制
+Math.max(...array);
+
+const getMaximum = (arr) => arr.reduce((a, b) => Math.max(a, b));
+```
+
+- [Pass an array as function arguments](https://getfrontend.tips/pass-an-array-as-function-arguments/)
+
+### 获取数组中首尾元素
+
+```js
+const { length, 0: first, [length - 1]: last } = arr;
+```
+
+- [Pick the first and last items of an array](https://getfrontend.tips/pick-the-first-and-last-items-of-an-array/)

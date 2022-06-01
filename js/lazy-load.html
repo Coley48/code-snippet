@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lazy-load</title>
+    <style>
+        /* #region basic */
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+        }
+
+        /* #endregion */
+
+        /* #region main */
+        .container {
+            width: 60%;
+            height: 400%;
+            background-color: lightgray;
+            display: flex;
+            margin: 0 auto;
+            /* justify-items: center; */
+        }
+
+        .section {
+            background-color: lightblue;
+            height: 300px;
+            display: flex;
+        }
+
+        .section img {
+            margin: auto;
+            width: 200px;
+            height: auto;
+        }
+        /* #endregion */
+    </style>
+</head>
+
+<body>
+    <div class="container">
+    </div>
+    <div class="section">
+        <img id="image" data-src="https://blog.coley48.cn/images/avator.jpg" alt="">
+    </div>
+
+    <script>
+        window.onload = function () {
+            let observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting) {
+                        let el = entry.target;
+                        el.src = el.dataset.src;
+                        observer.unobserve(el);
+                        console.log("intersection observer callback")
+                    }
+                });
+            }, { rootMargin: "200px", threshold: 0 })
+            observer.observe(document.getElementById("image"));
+        }
+    </script>
+</body>
+
+</html>
