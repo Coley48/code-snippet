@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>line-clamp</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+        }
+
+        .container {
+            width: 60%;
+            height: 100%;
+            background-color: lightgray;
+            display: flex;
+            margin: 0 auto;
+        }
+
+        .main {
+            width: 200px;
+            height: 200px;
+            background-color: lightblue;
+        }
+
+        .truncate {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="main">
+            <p class="truncate">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis rerum ullam saepe laudantium. Corporis quidem facere architecto perferendis reprehenderit! Harum sint voluptatibus iusto dolore asperiores nisi consequatur minus nemo vero.</p>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -154,3 +154,89 @@ a[href$='.png' i]:after {
 ```
 
 - [原文 Ignore case sensitivity in a CSS attribute selector](https://getfrontend.tips/ignore-case-sensitivity-in-a-css-attribute-selector/)
+
+### currentColor 关键字
+
+在父元素中定义的 `color` 属性值，可以在该元素以及子元素中通过 `currentColor` 关键字访问；
+
+```css
+div {
+    color: #fff;
+    background-image: linear-gradient(to bottom, currentColor, #fff);
+}
+
+div a {
+    border-bottom: 1px solid currentColor;
+    color: currentColor;
+    text-decoration: none;
+}
+```
+
+- [Reuse the current color](https://getfrontend.tips/reuse-the-current-color/)
+
+### 填充加载失败的图片
+
+利用 `::before` 和 `::after` 伪元素填充加载失败的图片；
+
+```css
+img {
+    position: relative;
+    /* The initial styles */
+    display: block;
+    height: auto;
+    min-height: 4rem;
+    width: 100%;
+}
+
+img::before,
+img::after {
+    /* Take full size of the image */
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+img::before {
+    /* Hide the default placeholder */
+    background: #fff;
+    content: '';
+}
+
+img::after {
+    /* Taken from the `alt` attribute of the element */
+    content: attr(alt) ' image is broken';
+    border: 2px dotted #d1d5db;
+
+    /* Center */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+```
+
+- [Style broken images](https://getfrontend.tips/style-broken-images/)
+
+### 文本省略
+
+
+```css
+/* 单行省略 */
+.single-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 多行省略 */
+.multiple-truncate {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+```
+
+- [-webkit-line-clamp MDN 文档](https://developer.mozilla.org/zh-CN/docs/Web/CSS/-webkit-line-clamp)
+- [Truncate long text](https://getfrontend.tips/truncate-long-text/)

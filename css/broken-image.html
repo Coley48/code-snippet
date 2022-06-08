@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>broken-image</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+        }
+
+        .container {
+            width: 60%;
+            height: 100%;
+            background-color: lightgray;
+            display: flex;
+            margin: 0 auto;
+        }
+
+        .main {
+            width: 200px;
+            height: 200px;
+            background-color: lightblue;
+        }
+
+        img {
+            position: relative;
+
+            /* The initial styles */
+            display: block;
+            height: auto;
+            min-height: 4rem;
+            width: 100%;
+        }
+
+        img::before,
+        img::after {
+            /* Take full size of the image */
+            height: 100%;
+            left: 0;
+            position: absolute;
+            top: 0;
+            width: 100%;
+        }
+
+        img::before {
+            /* Hide the default placeholder */
+            background: #fff;
+            content: '';
+        }
+
+        img::after {
+            /* Taken from the `alt` attribute of the element */
+            content: attr(alt) ' image is broken';
+            border: 2px dotted #d1d5db;
+
+            /* Center */
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="main">
+            <img src="https://blog.coley48.cn/images/avator.jpg" alt="aaa">
+        </div>
+    </div>
+</body>
+
+</html>

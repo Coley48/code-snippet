@@ -31,7 +31,6 @@ function newDecode(param) {
 
 ```js
 function toPromise(fn, ...params) {
-  if (typeof fn !== "function") return;
   return new Promise((resolve, reject) => {
     let next = (mark) => {
       if (mark === false || mark instanceof Error) {
@@ -40,7 +39,7 @@ function toPromise(fn, ...params) {
         resolve(true);
       }
     };
-    if (fn) {
+    if (typeof fn === "function") {
       fn(next, ...params);
     } else {
       next()
@@ -148,10 +147,19 @@ a ^= b;
 b ^= a;
 a ^= b;
 
+// 数组
+a = [b, (b = a)][0];
+// 立即执行函数
+a = ((x) => x)(b, (b = a));
+
 // 加减运算
 a += b;
 b = a - b;
 a -= b;
+
+// 逗号表达式 
+a = b + ((b = a), 0);
+a = b * ((b = a), 1);
 ```
 
 ### 一行代码
@@ -312,3 +320,36 @@ const { length, 0: first, [length - 1]: last } = arr;
 ```
 
 - [Pick the first and last items of an array](https://getfrontend.tips/pick-the-first-and-last-items-of-an-array/)
+
+### 转换为罗马数字
+
+```js
+const lookup = [
+    ['M', 1000],
+    ['CM', 900],
+    ['D', 500],
+    ['CD', 400],
+    ['C', 100],
+    ['XC', 90],
+    ['L', 50],
+    ['XL', 40],
+    ['X', 10],
+    ['IX', 9],
+    ['V', 5],
+    ['IV', 4],
+    ['I', 1],
+];
+
+const convertToRoman = (number) =>
+    lookup.reduce((curr, [key, value]) => {
+        curr += key.repeat(Math.floor(number / value));
+        number = number % value;
+        return curr;
+    }, '');
+
+convertToRoman(20); // 'XX'
+convertToRoman(21); // 'XXI'
+convertToRoman(2021); // 'MMXXI'
+```
+
+- [Replace multiple if statements with a lookup table](https://getfrontend.tips/replace-multiple-if-statements-with-a-lookup-table/)
