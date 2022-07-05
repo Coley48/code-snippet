@@ -271,7 +271,7 @@ const isAppleDevice = () => /Mac|iPod|iPhone|iPad/.test(navigator.platform);
 
 <!-- ==================================================================================== -->
 ### 随机值
-####  获取随机布尔值
+####  随机布尔值
 
 ```js
 Math.random() >= 0.5;
@@ -280,7 +280,23 @@ Math.random() >= 0.5;
 #### 随机字符串
 
 ```js
+// 字符串
 Math.random().toString(36).slice(2);
+
+// 颜色字符串
+"#" + Math.random().toString(16).slice(2, 8);
+```
+
+#### 随机 IP 地址
+
+```js
+[1, 0, 0, 0].map((v) => Math.floor(Math.random() * 255) + v).join('.');
+```
+
+#### 生成 UUID
+
+```js
+const uuid = (a) => (a ? (a ^ ((Math.random() * 16) >> (a / 4))).toString(16) : ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/\d/g, uuid));
 ```
 
 <!-- ==================================================================================== -->
@@ -303,8 +319,55 @@ document.documentElement.clientHeight + window.scrollY >= document.documentEleme
 window.getSelection().toString();
 ```
 
-<!-- ==================================================================================== -->
-### 其他
+### 数学 Math
+#### 根据两点计算直线角度
+
+```js
+Math.atan2(y2 - y1, x2 - x1); // 弧度
+Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI; // 度数 
+```
+
+#### 计算两点间距离
+
+```js
+Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+```
+
+#### 线性插值
+
+```js
+const lerp = (a, b, amount) => (1 - amount) * a + amount * b;
+```
+
+#### 最大公约数
+
+```js
+const gcd = (a, b) => (b === 0 ? a : gcd(b, a % b));
+```
+
+#### 十进制转二进制
+
+```js
+function decToBin(num) {
+  if (num === 0) 
+    return 0;
+  else
+    return (num % 2) + 10 * decToBin(~~(num / 2)));  
+}
+```
+
+#### 浮点数取整
+
+JavaScript 的位运算以 32 二进制执行，进行位运算时，会先将数值转换成 32 位有符号整数；
+
+```js
+// 位运算取整
+52.555 | 0; // 5
+
+// 取反取整
+~~52.555; // 5
+```
+
 #### 转换为罗马数字
 
 ```js
@@ -337,6 +400,36 @@ convertToRoman(2021); // 'MMXXI'
 ```
 
 - [Replace multiple if statements with a lookup table](https://getfrontend.tips/replace-multiple-if-statements-with-a-lookup-table/)
+
+<!-- ==================================================================================== -->
+### 其他
+#### 环境判断
+
+```js
+// 判断是否运行在 Jest 环境下
+typeof process !== 'undefined' && process.env.JEST_WORKER_ID !== undefined;
+
+// 判断是否运行在 NodeJS 环境下
+typeof process !== 'undefined' && process.versions != null && process.versions.node != null;
+
+// 判断是否运行在 浏览器 环境下
+typeof window === 'object' && typeof document === 'object';
+
+// 判断是否黑暗模式
+window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+```
+
+#### 解码 JWT token
+
+```js
+const decode = (token) =>
+    decodeURIComponent(
+        atob(token.split('.')[1].replace('-', '+').replace('_', '/'))
+            .split('')
+            .map((c) => `%${('00' + c.charCodeAt(0).toString(16)).slice(-2)}`)
+            .join('')
+    );
+```
 
 #### canvas 下载为图片
 
