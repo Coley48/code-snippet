@@ -18,3 +18,17 @@ const keepAlivePages = Array.from(routes.filter((route: RouteConfig) => {
 ```
 
 [Vue keep-alive api](https://cn.vuejs.org/v2/api/#keep-alive)
+
+### 组件二次封装
+
+```vue
+<template>
+  <div class="my-input">
+    <el-input v-bind="$attrs">
+      <template v-for="(_, name) in $slots" #[name]="scopedData">
+        <slot :name="name" v-bind="scopedData"></slot>
+      </template>
+    </el-input>
+  </div>
+</template>
+```

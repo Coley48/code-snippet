@@ -296,7 +296,7 @@ Math.random().toString(36).slice(2);
 #### 生成 UUID
 
 ```js
-const uuid = (a) => (a ? (a ^ ((Math.random() * 16) >> (a / 4))).toString(16) : ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/\d/g, uuid));
+const uuid = (a) => (a ? (a ^ ((Math.random() * 16) >> (a / 4))).toString(16) : ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, uuid));
 ```
 
 <!-- ==================================================================================== -->
@@ -516,4 +516,34 @@ const trueTypeOf = (obj) => {
 #### 判断当前页面是否聚焦
 ```js
 const isTabInView = () => !document.hidden;  // Not hidden
+```
+
+#### 模拟浏览器缩放
+```js
+window.zoomIndex = 7;
+function mousewheelHandler(e) {
+  let breaks = [0.25, 0.33, 0.5, 0.67, 0.75, 0.80, 0.90, 1, 1.1, 1.25, 1.5, 1.75, 2, 2.5, 3, 4, 5];
+  if (window.zoomIndex > 0 && e.wheelDeltaY < 0) {
+    window.zoomIndex--;
+  } else if (window.zoomIndex < breaks.length - 1 && e.wheelDeltaY > 0) {
+    window.zoomIndex++;
+  }
+  document.documentElement.style.zoom = breaks[window.zoomIndex];
+}
+function scrollHandler(e) {
+  e.preventDefault();
+  return false;
+}
+document.onkeydown = function (evt) {
+  if (evt.ctrlKey) {
+    document.body.classList.add("is-zooming");
+    document.addEventListener("mousewheel", mousewheelHandler);
+    document.addEventListener("scroll", scrollHandler);
+  }
+}
+document.onkeyup = function (evt) {
+  document.body.classList.remove("is-zooming");
+  document.removeEventListener("mousewheel", mousewheelHandler);
+  document.removeEventListener("scroll", scrollHandler);
+}
 ```

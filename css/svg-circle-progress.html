@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Progress Ring</title>
+</head>
+
+<body>
+    <svg id="progress-ring" width="180" height="100" viewBox="0 0 180 100" xmlns="http://www.w3.org/2000/svg">
+        <!-- 定义渐变色 -->
+        <defs>
+            <linearGradient id="gradient" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" style="stop-color:#062B6C;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#0EB1F9;stop-opacity:1" />
+            </linearGradient>
+        </defs>
+        <!-- 背景轨道 -->
+        <path d="M10 90 A80 80 0 0 1 170 90" fill="none" stroke="#183c63" stroke-width="10" stroke-linecap="round" />
+        <!-- 前景进度条 -->
+        <path id="progress-path" fill="none" stroke="url(#gradient)" stroke-width="10" stroke-linecap="round" />
+    </svg>
+
+    <div class="markdown prose w-full break-words dark:prose-invert dark">
+        <h3>常用的SVG路径指令</h3>
+        <ol>
+            <li>
+                <p><strong>M (moveto)</strong>：</p>
+                <ul>
+                    <li><code>M x,y</code>: 移动到指定的坐标<code>(x,y)</code>，将画笔移动到该点，开始新的子路径。</li>
+                    <li>小写<code>m</code>：相对移动，即相对于当前点的偏移量。</li>
+                </ul>
+            </li>
+            <li>
+                <p><strong>L (lineto)</strong>：</p>
+                <ul>
+                    <li><code>L x,y</code>: 从当前点绘制一条直线到指定的坐标<code>(x,y)</code>。</li>
+                    <li>小写<code>l</code>：相对直线，即相对于当前点的偏移量。</li>
+                </ul>
+            </li>
+            <li>
+                <p><strong>H (horizontal lineto)</strong>：</p>
+                <ul>
+                    <li><code>H x</code>: 从当前点绘制一条水平直线到指定的<code>x</code>坐标。</li>
+                    <li>小写<code>h</code>：相对水平直线。</li>
+                </ul>
+            </li>
+            <li>
+                <p><strong>V (vertical lineto)</strong>：</p>
+                <ul>
+                    <li><code>V y</code>: 从当前点绘制一条垂直直线到指定的<code>y</code>坐标。</li>
+                    <li>小写<code>v</code>：相对垂直直线。</li>
+                </ul>
+            </li>
+            <li>
+                <p><strong>C (curveto)</strong>：</p>
+                <ul>
+                    <li><code>C x1,y1, x2,y2, x,y</code>:
+                        三次贝塞尔曲线，控制点是<code>(x1,y1)</code>和<code>(x2,y2)</code>，终点是<code>(x,y)</code>。</li>
+                    <li>小写<code>c</code>：相对三次贝塞尔曲线。</li>
+                </ul>
+            </li>
+            <li>
+                <p><strong>S (smooth curveto)</strong>：</p>
+                <ul>
+                    <li><code>S x2,y2, x,y</code>:
+                        平滑的三次贝塞尔曲线，假设前一个控制点的反射点作为第一个控制点，<code>(x2,y2)</code>是第二个控制点，<code>(x,y)</code>是终点。</li>
+                    <li>小写<code>s</code>：相对平滑三次贝塞尔曲线。</li>
+                </ul>
+            </li>
+            <li>
+                <p><strong>Q (quadratic Bézier curve)</strong>：</p>
+                <ul>
+                    <li><code>Q x1,y1, x,y</code>: 二次贝塞尔曲线，控制点是<code>(x1,y1)</code>，终点是<code>(x,y)</code>。</li>
+                    <li>小写<code>q</code>：相对二次贝塞尔曲线。</li>
+                </ul>
+            </li>
+            <li>
+                <p><strong>T (smooth quadratic Bézier curveto)</strong>：</p>
+                <ul>
+                    <li><code>T x,y</code>: 平滑的二次贝塞尔曲线，假设前一个控制点的反射点作为控制点，<code>(x,y)</code>是终点。</li>
+                    <li>小写<code>t</code>：相对平滑二次贝塞尔曲线。</li>
+                </ul>
+            </li>
+            <li>
+                <p><strong>A (elliptical arc)</strong>：</p>
+                <ul>
+                    <li><code>A rx,ry x-axis-rotation large-arc-flag sweep-flag x,y</code>:
+                        椭圆弧线，<code>rx</code>和<code>ry</code>是半径，<code>x-axis-rotation</code>是旋转角度，<code>large-arc-flag</code>是大弧标志，<code>sweep-flag</code>是扫描标志，<code>(x,y)</code>是终点。
+                    </li>
+                    <li>小写<code>a</code>：相对椭圆弧线。</li>
+                </ul>
+            </li>
+            <li>
+                <p><strong>Z (closepath)</strong>：</p>
+                <ul>
+                    <li><code>Z</code>: 关闭路径，从当前点绘制一条直线回到子路径的起点。</li>
+                </ul>
+            </li>
+        </ol>
+        <h3>示例及解释</h3>
+        <p>以下是一个包含各种指令的路径示例及其解释：</p>
+        <code class="!whitespace-pre hljs language-html">
+            <span class="hljs-tag">&lt;<span class="hljs-name">svg</span>
+            <span class="hljs-attr">width</span>=<span class="hljs-string">"200"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"200"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M10 10 H 90 V 90 H 10 L 10 10 Z"</span> <span class="hljs-attr">stroke</span>=<span class="hljs-string">"black"</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">"transparent"</span>/&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">svg</span>&gt;</span>
+        </code>
+    </div>
+    </div>
+    </pre>
+    <p>这个路径指令创建了一个矩形：</p>
+    <ul>
+        <li><code>M10 10</code>：移动到点(10, 10)。</li>
+        <li><code>H 90</code>：绘制一条水平直线到x坐标90。</li>
+        <li><code>V 90</code>：绘制一条垂直直线到y坐标90。</li>
+        <li><code>H 10</code>：绘制一条水平直线回到x坐标10。</li>
+        <li><code>L 10 10</code>：绘制一条直线回到点(10, 10)。</li>
+        <li><code>Z</code>：关闭路径，绘制一条直线回到起点(10, 10)。</li>
+    </ul>
+    </div>
+
+    <script>
+        function setProgress(percent) {
+            const radius = 80;
+            const circumference = Math.PI * radius;
+            const offset = circumference * (percent / 100);
+
+            // Clamp percent to a maximum of 100
+            percent = Math.min(percent, 100);
+
+            // Convert percent to angle in radians
+            const angle = Math.PI * (percent / 100);
+
+            // Calculate end point of the arc
+            const endX = 10 + radius + radius * Math.cos(Math.PI - angle);
+            const endY = 90 - radius * Math.sin(Math.PI - angle);
+            const largeArcFlag = percent > 100 ? 1 : 0;
+
+            const progressPath = document.getElementById('progress-path');
+            progressPath.setAttribute('d', `M10 90 A80 80 0 ${largeArcFlag} 1 ${endX} ${endY}`);
+        }
+
+        // Set initial progress to 50%
+        setProgress(90);
+    </script>
+</body>
+
+</html>

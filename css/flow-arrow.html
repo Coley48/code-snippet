@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG flow Arrow</title>
+
+    <style>
+        body {
+            background-color: cadetblue;
+        }
+    </style>
+</head>
+
+<body>
+    <svg width="200" height="200" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+        <!-- <defs>
+            <marker id="arrowhead" markerWidth="2" markerHeight="4" refX="0" refY="2" orient="auto">
+                <polygon points="0 0, 2 2, 0 4" fill="black" />
+            </marker>
+        </defs> -->
+        <!-- 定义阴影效果 -->
+        <defs>
+            <filter id="box-shadow" x="-100%" y="-100%" width="300%" height="300%">
+                <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#46e6e4" />
+            </filter>
+        </defs>
+        <path id="track-bg" d="M 10 275 L 100 275 L 100 150 L200 150" stroke="black" stroke-width="18" fill="none"
+            marker-end="url(#arrowhead)" />
+
+        <!-- 定义矩形 -->
+        <path id="track1" d="M 10 275 L 100 275 L 100 150 L200 150" stroke="black" stroke-width="1" fill="none"
+            marker-end="url(#arrowhead)" />
+        <circle r="5" fill="#2DFFFC" filter="url(#box-shadow)">
+            <animateMotion repeatCount="indefinite" dur="4s">
+                <mpath xlink:href="#track1" />
+            </animateMotion>
+        </circle>
+
+        <path id="track2" d="M 10 25 L 100 25 L 100 150 L200 150" stroke="black" stroke-width="1" fill="none"
+            marker-end="url(#arrowhead)" />
+        <circle r="5" fill="#2DFFFC" filter="url(#box-shadow)">
+            <animateMotion repeatCount="indefinite" dur="4s">
+                <mpath xlink:href="#track2" />
+            </animateMotion>
+        </circle>
+    </svg>
+
+    <script>
+        function getPath(input = 3, output = 1) {
+            let padding = 10;
+            let width = 180;
+            let len = width / 2;
+            let height = 280;
+
+            const start = {
+                x: width / 2 + padding,
+                y: height / 2,
+            }
+            if (input > 1) {
+                start.y = padding;
+            }
+            let path = `M ${start.x} ${start.y} `;
+            let breakpoints = [
+                { type: "in", pos: 0 },
+                { type: "in", pos: 0.5 },
+                { type: "out", pos: 0.5 },
+                { type: "in", pos: 1 },
+            ]
+            for (let i = 0; i < breakpoints.length; i++) {
+                const data = breakpoints[i];
+                const { x, y } = start;
+                const offsetY = height * data.pos + padding;
+
+                // 有则向下位移
+                if (data.pos) {
+                    path += `L ${x} ${offsetY} `;
+                    start.y = offsetY;
+                }
+
+                if (data.type === "in") {
+                    path += `L ${padding} ${offsetY} L ${x} ${offsetY} `;
+                } else {
+                    path += `L ${width + padding} ${offsetY} L ${x} ${offsetY} `;
+                }
+            }
+
+            document.getElementById('track-bg').setAttribute('d', path);
+            return path;
+        }
+        console.log(getPath())
+
+        function setProgress(percent) {
+            const radius = 80;
+            const circumference = Math.PI * radius;
+            const offset = circumference * (percent / 100);
+
+            // Clamp percent to a maximum of 100
+            percent = Math.min(percent, 100);
+
+            // Convert percent to angle in radians
+            const angle = Math.PI * (percent / 100);
+
+            // Calculate end point of the arc
+            const endX = 10 + radius + radius * Math.cos(Math.PI - angle);
+            const endY = 90 - radius * Math.sin(Math.PI - angle);
+            const largeArcFlag = percent > 100 ? 1 : 0;
+
+            const progressPath = document.getElementById('progress-path');
+            progressPath.setAttribute('d', `M10 90 A80 80 0 ${largeArcFlag} 1 ${endX} ${endY}`);
+        }
+
+        // Set initial progress to 50%
+    </script>
+</body>
+
+</html>
