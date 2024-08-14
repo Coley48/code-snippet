@@ -547,3 +547,13 @@ document.onkeyup = function (evt) {
   document.removeEventListener("scroll", scrollHandler);
 }
 ```
+
+#### 获取页面缩放比例
+
+不能简单使用 window.devicePixelRatio，Mac 屏幕的 window.devicePixelRatio 是普通屏幕的两倍；
+
+```js
+if (window.outerWidth !== undefined && window.innerWidth !== undefined) {
+  ratio = window.outerWidth / window.innerWidth;
+}
+```
