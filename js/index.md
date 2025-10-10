@@ -557,3 +557,83 @@ if (window.outerWidth !== undefined && window.innerWidth !== undefined) {
   ratio = window.outerWidth / window.innerWidth;
 }
 ```
+
+#### 计算完美区间
+
+```js
+// 返回区间数组
+function generateTicks(minValue, maxValue, splitNumber = 5) {
+  // 确保 minValue 和 maxValue 有效
+  minValue = Number(minValue);
+  maxValue = Number(maxValue);
+  if (isNaN(minValue) || isNaN(maxValue) || minValue > maxValue) {
+    return [];
+  }
+
+  // 计算数据范围
+  const range = maxValue - minValue;
+
+  // 计算原始间隔
+  const rawInterval = range / splitNumber;
+
+  // 找到“美观”的间隔（基于 1、2、5 的 10 的幂次）
+  const magnitude = Math.pow(10, Math.floor(Math.log10(Math.abs(rawInterval) || 1)));
+  const normalized = rawInterval / magnitude;
+  let niceInterval;
+
+  // 调整为“美观”间隔
+  if (normalized >= 3.5) {
+    niceInterval = 5 * magnitude;
+  } else if (normalized >= 1.5) {
+    niceInterval = 2 * magnitude;
+  } else {
+    niceInterval = magnitude;
+  }
+
+  // 如果间隔过小，尝试放大
+  if (niceInterval * splitNumber < range) {
+    niceInterval *= 2;
+    if (niceInterval * splitNumber < range) {
+      niceInterval = 10 * magnitude;
+    }
+  }
+
+  // 计算刻度数组，从最小刻度开始
+  const ticks = [];
+  const minTick = Math.floor(minValue / niceInterval) * niceInterval;
+  const maxTick = Math.ceil(maxValue / niceInterval) * niceInterval;
+  const tickCount = Math.round((maxTick - minTick) / niceInterval) + 1;
+
+  for (let i = 0; i < tickCount; i++) {
+    const tickValue = minTick + i * niceInterval;
+    // 确保刻度值在范围内，处理浮点数精度问题
+    if (tickValue <= maxValue + 1e-10 && tickValue >= minValue - 1e-10) {
+      ticks.push(Number(tickValue.toFixed(10))); // 避免浮点数精度问题
+    }
+  }
+
+  return ticks;
+}
+```
+
+
+### delay函数
+
+```js
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function delayedLoop() {
+  for (let i = 0; i < 5; i++) {
+    console.log(`执行第 ${i + 1} 次，时间: ${new Date().toLocaleTimeString()}`);
+    
+    // 等待1秒
+    await delay(1000);
+    
+    // 你的业务逻辑
+  }
+}
+
+delayedLoop();
+```
